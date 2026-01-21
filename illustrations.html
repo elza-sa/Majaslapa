@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illustrations — līva drauga</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image:
+                linear-gradient(to right, #ccc 1px, transparent 1px),
+                linear-gradient(to bottom, #ccc 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .grid-bg {
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* HEADER */
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu a {
+            color: #1b1818;
+            padding: 15px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: lowercase;
+            transition: color 0.3s ease;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            color: #FC0D0D;
+        }
+
+        /* DROPDOWN */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #000;
+            min-width: 160px;
+            border-radius: 10px;
+            z-index: 10;
+        }
+
+        .dropdown-content a {
+            display: block;
+            color: #FC0D0D;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        /* GALLERY */
+        .work-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .gallery-item {
+            flex-basis: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* ✅ THICK BORDER IS HERE */
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 68px;
+            margin-bottom: 26px;
+            object-fit: cover;
+            border: 16px solid black;
+            filter: sepia(0.7) saturate(1.5) hue-rotate(15deg);
+            transition: filter 0.3s ease-in-out;
+        }
+
+        .gallery-item img:hover {
+            filter: none;
+        }
+
+        .caption {
+            font-size: 1.5em;
+            color: #080808;
+            text-align: center;
+        }
+
+        /* BACK TO TOP */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FC0D0D;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            z-index: 100;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 767px) {
+            .header-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .work-gallery {
+                flex-direction: column;
+            }
+
+            .gallery-item {
+                flex-basis: 100%;
+            }
+
+            .gallery-item img {
+                border-width: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-item img {
+                border-width: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="grid-bg">
+
+    <header class="header-row">
+        <div class="logo">
+            <img src="../images/livadrauga.png" alt="Līva Drauga logo" style="height:100px;">
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">home</a>
+            <a href="about.html">about me</a>
+
+            <div class="dropdown">
+                <a href="#" onclick="toggleDropdown(event)" class="active">work</a>
+                <div class="dropdown-content">
+                        <a href="photography.html" >photography</a>
+                        <a href="graphic.html" target="_self">graphic</a>
+                        <a href="illustrations.html" target="_self">illustrations</a>
+                </div>
+            </div>
+
+            <a href="contact.html">contact me</a>
+        </nav>
+    </header>
+
+    <section>
+        <div class="work-gallery">
+
+            <div class="gallery-item">
+                <img src="../images/instrukcija_ar_mokapu 1.png" alt="">
+                <div class="caption">Zine “How to shop second hand”</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/Screenshot 2024-05-19 at 18.28 1.png" alt="">
+                <div class="caption">Mixed technique video collage</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/nintendo-02 1.png" alt="">
+                <div class="caption">Nintendo switch cover design</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/Screen Shot 2024-04-29 at 10.05 1.png" alt="">
+                <div class="caption">Self portrait collage</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/aizmugure3 1.png" alt="">
+                <div class="caption">T-shirt design proposal for “JUUK”</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/varianti-09 1.png" alt="">
+                <div class="caption">Text + photography poster</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/IMG_5884 1.png" alt="">
+                <div class="caption">3D poster “on the table”</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/Screenshot 2024-05-19 at 18.38 1.png" alt="">
+                <div class="caption">GIF set</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../images/Screenshot 2024-05-19 at 18.49 1.png" alt="">
+                <div class="caption">3D composition video collage</div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<a href="#top" class="back-to-top">↑</a>
+
+<script>
+function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = event.target.parentElement;
+    const content = dropdown.querySelector('.dropdown-content');
+
+    document.querySelectorAll('.dropdown-content').forEach(el => {
+        if (el !== content) el.style.display = 'none';
+    });
+
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+
+document.addEventListener('click', e => {
+    if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-content').forEach(el => el.style.display = 'none');
+    }
+});
+</script>
+
+</body>
+</html>

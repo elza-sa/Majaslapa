@@ -1,0 +1,34 @@
+{
+  "heroMain": "Hi, this is a place, where creative freedom...",
+  "heroSub": "of feelings and emotional expressions...",
+  "heroFull": "Hi,<br>this is a place, where <br>creative freedom,<br> emotions and simplicity <br>of life meets art and <br>creates visualizations <br>",
+  "heroSubFull": "of feelings and <br>emotional expressions.<br>If we are somewhat <br>alike, maybe we can <br>express our emotions in<br> art together..",
+  "recentWorkTitle": "recent work",
+  "galleryImages": [
+    {"src": "../images/drauga.png", "alt": "Graphic Design", "dateAdded": "2024-01-01T10:00:00Z"},
+    {"src": "../images/sarkani lauki.png", "alt": "Illustrations", "dateAdded": "2024-01-02T10:00:00Z"},
+    {"src": "../images/kamerina.png", "alt": "Photography", "dateAdded": "2024-01-03T10:00:00Z"},
+    {"src": "../images/nintendo-02 1.png", "alt": "Artwork", "dateAdded": "2024-01-04T10:00:00Z"}
+  ],
+  "photographyImages": [
+    {"src": "../images/peleka tina.png", "alt": "Black and white photo of a plant", "dateAdded": "2024-02-01T10:00:00Z"},
+    {"src": "../images/kamerina.png", "alt": "Photo of a small room", "dateAdded": "2024-02-02T10:00:00Z"},
+    {"src": "../images/ratini.png", "alt": "Photo of wheels", "dateAdded": "2024-02-03T10:00:00Z"},
+    {"src": "../images/sarkani lauki.png", "alt": "Photo of red fields", "dateAdded": "2024-02-04T10:00:00Z"},
+    {"src": "../images/tina.png", "alt": "Photo of a plant", "dateAdded": "2024-02-05T10:00:00Z"},
+    {"src": "../images/vienradzite.png", "alt": "Photo of a unicorn statue", "dateAdded": "2024-02-06T10:00:00Z"},
+    {"src": "../images/mamma.png", "alt": "Photo of a woman", "dateAdded": "2024-02-07T10:00:00Z"},
+    {"src": "../images/blue.png", "alt": "Blue-toned photo", "dateAdded": "2024-02-08T10:00:00Z"}
+  ],
+  "workImages": [
+    {"src": "../images/instrukcija_ar_mokapu 1.png", "alt": "Zine 'How to shop second hand'", "dateAdded": "2024-03-01T10:00:00Z"},
+    {"src": "../images/Screenshot 2024-05-19 at 18.28 1.png", "alt": "Mixed technique video collage", "dateAdded": "2024-03-02T10:00:00Z"},
+    {"src": "../images/nintendo-02 1.png", "alt": "Nintendo switch cover design", "dateAdded": "2024-03-03T10:00:00Z"},
+    {"src": "../images/Screen Shot 2024-04-29 at 10.05 1.png", "alt": "Self portrait collage", "dateAdded": "2024-03-04T10:00:00Z"},
+    {"src": "../images/aizmugure3 1.png", "alt": "T-shirt design proposal for JUUK", "dateAdded": "2024-03-05T10:00:00Z"},
+    {"src": "../images/varianti-09 1.png", "alt": "Text + photography poster", "dateAdded": "2024-03-06T10:00:00Z"},
+    {"src": "../images/IMG_5884 1.png", "alt": "3D poster on the table", "dateAdded": "2024-03-07T10:00:00Z"},
+    {"src": "../images/Screenshot 2024-05-19 at 18.38 1.png", "alt": "GIF set", "dateAdded": "2024-03-08T10:00:00Z"},
+    {"src": "../images/Screenshot 2024-05-19 at 18.49 1.png", "alt": "3D composition video collage", "dateAdded": "2024-03-09T10:00:00Z"}
+  ]
+}

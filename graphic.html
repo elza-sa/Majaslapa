@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design — līva drauga</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Consolidated and updated CSS for the new layout. */
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image:
+                linear-gradient(to right, #ccc 1px, transparent 1px),
+                linear-gradient(to bottom, #ccc 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* The main grid background for the entire body */
+        .grid-bg {
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /*
+         * The header container with a white background and grid pattern.
+         * Using Flexbox to align the logo and menu horizontally.
+         */
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px; /* Added some padding for better spacing */
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Red color for the logo title */
+        .logo-title {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
+            color: #FC0D0D;
+            text-transform: lowercase;
+        }
+
+        /* Navigation styling to align links to the right */
+        .menu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .menu a {
+            display: block;
+            color: #1b1818;
+            padding: 15px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-transform: lowercase;
+        }
+
+        .menu a:hover, .menu a.active {
+            color: #FC0D0D;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #000;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: #FC0D0D;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+        
+        /* Main content and gallery styles */
+        .work-gallery {
+            /* This now creates exactly 3 columns for larger screens */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Media query to ensure a single column on smaller screens for better mobile viewing */
+        @media (max-width: 767px) {
+            .header-row {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .menu a {
+                padding: 8px 12px;
+                font-size: 18px;
+            }
+
+            .work-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-row {
+                padding: 10px;
+            }
+
+            .logo {
+                margin-bottom: 5px;
+            }
+
+            .menu {
+                gap: 10px;
+            }
+
+            .menu a {
+                padding: 6px 10px;
+                font-size: 16px;
+            }
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 20px; /* Increased padding to make the frame bigger */
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 45px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            border: 8px solid black;
+            filter: sepia(0.7) saturate(2) hue-rotate(15deg);
+            transition: filter 0.3s ease-in-out;
+        }
+
+        .gallery-item img:hover {
+            filter: none; /* Removes the filter on hover */
+        }
+        
+        .caption {
+            font-size: 1.5em;
+            color: #080808;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        /* Back-to-top button styling */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FC0D0D;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-to-top:hover {
+            background-color: #a00c0c;
+        }
+
+        /* Scroll behavior for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="grid-bg">
+        <header class="header-row">
+            <div class="logo">
+                <img alt="Līva Drauga logo" src="../images/livadrauga.png" style="height: 100px;"/>
+            </div>
+            <nav class="menu">
+                <a href="index.html" target="_self" title="Home">home</a>
+                <a href="about.html" target="_self" title="About Me">about me</a>
+                <div class="dropdown">
+                    <a href="#" onclick="toggleDropdown(event)" title="Work" class="active">work</a>
+                    <div class="dropdown-content">
+                        <!-- The 'graphic' link is now set as active -->
+                        <a href="photography.html" >photography</a>
+                        <a href="graphic.html" target="_self">graphic</a>
+                        <a href="illustrations.html" target="_self">illustrations</a>
+                    </div>
+                </div>
+                <a href="contact.html" target="_self" title="Contact Me">contact me</a>
+            </nav>
+        </header>
+
+        <section>
+            <div class="work-gallery">
+                <div class="gallery-item">
+                    <img src="../images/drauga.png" alt="Drauga visual identity" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">“Drauga” visual identity</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/pulveris.png" alt="Soy drink packaging redesign" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Soy drink packaging redesign</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/cucina.png" alt="Master cucina logo redesign" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">“Master cucina” logo redesign</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/kramatina.png" alt="Poetry zine cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Poetry zine cover</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/piens.png" alt="Milk packaging redesign" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Milk packaging redesign</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/mute.png" alt="Animated poster for RDMV" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Animated poster for RDMV</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/velo.png" alt="Instagram posts for “Velo Express”" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Instagram posts for “Velo Express”</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../images/di.png" alt="Logo proposal for “Di donne” magazine" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    <div class="caption">Logo proposal for “Di donne” magazine</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <a href="#top" class="back-to-top" aria-label="Back to top">
+        ↑
+    </a>
+
+    <script>
+        function toggleDropdown(event) {
+            event.preventDefault();
+            const dropdown = event.target.parentElement;
+            const dropdownContent = dropdown.querySelector('.dropdown-content');
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                if (content !== dropdownContent) {
+                    content.style.display = 'none';
+                }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            }
+        });
+
+        // Close dropdown on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

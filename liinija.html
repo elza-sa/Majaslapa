@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Grid Pattern</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+ 
+        .grid-box {
+            width: 600px;
+            height: 400px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+ 
+        .title {
+            background: #f8f8f8;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+ 
+        .basic-grid {
+            width: 100%;
+            height: calc(100% - 51px); /* Subtracting title height + border */
+            background-color: white;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-box">
+        <div class="title">Basic Grid Pattern</div>
+        <div class="basic-grid"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography — līva drauga</title>
+    <!-- 
+        The CSS styles have been updated to create a two-column layout for the image gallery.
+        This new layout is responsive and matches the arrangement in the provided image.
+    -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            position: relative;
+        }
+
+        /* The main grid background for the entire body */
+        .grid-bg {
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /*
+         * The header container with a white background and grid pattern.
+         * Using Flexbox to align the logo and menu horizontally.
+         */
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            background-image:
+                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Red color for the logo title */
+        .logo-title {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
+            color: #FC0D0D;
+            text-transform: lowercase;
+        }
+
+        /* Navigation styling to align links to the right */
+        .menu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .menu a {
+            display: block;
+            color: #1b1818;
+            padding: 15px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-transform: lowercase;
+        }
+
+        .menu a:hover, .menu a.active {
+            color: #FC0D0D;
+        }
+
+        /* Dropdown menu styling */
+        /* Dropdown menu styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #000;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: #FC0D0D;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+        
+        /* Main content and gallery styles */
+        .work-gallery {
+            display: flex;
+            justify-content: center;
+            gap: px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .gallery-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            /* Allow columns to grow but not shrink to prevent content distortion */
+            flex: 1 0 0;
+        }
+
+        /* Media query for responsive design on smaller screens */
+        @media (max-width: 767px) {
+            .header-row {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+                gap: 15px;
+            }
+
+            .menu a {
+                padding: 8px 12px;
+                font-size: 18px;
+            }
+
+            .work-gallery {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-row {
+                padding: 10px;
+            }
+
+            .logo {
+                margin-bottom: 5px;
+            }
+
+            .menu {
+                gap: 10px;
+            }
+
+            .menu a {
+                padding: 6px 10px;
+                font-size: 16px;
+            }
+        }
+
+        .gallery-item {
+          /*  background-color: #fff;*/
+            border-radius: 25px;
+            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+            overflow: hidden;
+            padding: 35px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 96px;
+            margin-bottom: 26px;
+            object-fit: cover;
+            border: 16px solid black;
+            filter: sepia(0.7) saturate(1.5) hue-rotate(15deg); /* Slightly reduced the filter intensity */
+            transition: filter 0.3s ease-in-out;
+        }
+
+        .gallery-item img:hover {
+            filter: none; /* Removes the filter on hover */
+        }
+        
+        /* Back-to-top button styling */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FC0D0D;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-to-top:hover {
+            background-color: #a00c0c;
+        }
+
+        /* Scroll behavior for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg">
+        <header class="header-row" id="top">
+            <div class="logo">
+                <img alt="Līva Drauga logo" src="../images/livadrauga.png" style="height: 100px;"/>
+            </div>
+            <nav class="menu">
+                <a href="index.html" target="_self" title="Home">home</a>
+                <a href="about.html" target="_self" title="About Me">about me</a>
+                <div class="dropdown">
+                    <a href="#" onclick="toggleDropdown(event)"  class="active" target="_self" title="Work">work</a>
+                    <div class="dropdown-content">
+                        <a href="photography.html" >photography</a>
+                        <a href="graphic.html" target="_self">graphic</a>
+                        <a href="illustrations.html" target="_self">illustrations</a>
+                    </div>
+                </div>
+                <a href="contact.html" target="_self" title="Contact Me">contact me</a>
+            </nav>
+        </header>
+
+        <section>
+            <div class="work-gallery">
+                <!-- First column of images -->
+                <div class="gallery-column">
+                    <div class="gallery-item">
+                        <img src="../images/peleka tina.png" alt="Black and white photo of a plant" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/kamerina.png" alt="Photo of a small room" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/ratini.png" alt="Photo of wheels" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/sarkani lauki.png" alt="Photo of red fields" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                </div>
+                <!-- Second column of images -->
+                <div class="gallery-column">
+                    <div class="gallery-item">
+                        <img src="../images/tina.png" alt="Photo of a plant" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/vienradzite.png" alt="Photo of a unicorn statue" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/mamma.png" alt="Photo of a woman" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/blue.png" alt="Blue-toned photo" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Back to top button -->
+        <a href="#top" class="back-to-top" aria-label="Back to top">
+            ↑
+        </a>
+    </div>
+
+    <script>
+        function toggleDropdown(event) {
+            event.preventDefault();
+            const dropdown = event.target.parentElement;
+            const dropdownContent = dropdown.querySelector('.dropdown-content');
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                if (content !== dropdownContent) {
+                    content.style.display = 'none';
+                }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            }
+        });
+
+        // Close dropdown on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+            }
+        });
+
+        async function loadPhotographyContent() {
+            try {
+                // Try to load from localStorage first (for admin changes)
+                let data = JSON.parse(localStorage.getItem('siteData'));
+
+                // If no localStorage data, load from data.json
+                if (!data) {
+                    const response = await fetch('data.json');
+                    data = await response.json();
+                }
+
+                // Update photography gallery (sorted by most recent first)
+                if (data.photographyImages && data.photographyImages.length > 0) {
+                    const galleryColumns = document.querySelectorAll('.gallery-column');
+                    
+                    // Clear existing images
+                    galleryColumns.forEach(column => column.innerHTML = '');
+                    
+                    // Sort images by dateAdded (most recent first)
+                    const sortedImages = [...data.photographyImages].sort((a, b) => 
+                        new Date(b.dateAdded || '2024-01-01') - new Date(a.dateAdded || '2024-01-01')
+                    );
+                    
+                    // Distribute images across columns
+                    sortedImages.forEach((img, index) => {
+                        const columnIndex = index % 2; // Alternate between 2 columns
+                        const column = galleryColumns[columnIndex];
+                        
+                        const galleryItem = document.createElement('div');
+                        galleryItem.className = 'gallery-item';
+                        
+                        const imgElement = document.createElement('img');
+                        imgElement.src = img.src;
+                        imgElement.alt = img.alt;
+                        imgElement.onerror = function() {
+                            this.src = 'https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found';
+                        };
+                        
+                        galleryItem.appendChild(imgElement);
+                        column.appendChild(galleryItem);
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error loading photography content:', error);
+            }
+        }
+
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', loadPhotographyContent);
+    </script>
+</body>
+</html>
