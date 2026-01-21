@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .admin-panel {
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .edit-card {
+            background: white;
+            padding: 20px;
+            border: 2px solid #222;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .edit-card h3 {
+            color: #FC0D0D;
+            margin-top: 0;
+            text-transform: lowercase;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #FC0D0D;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        button:hover { background: #cc0000; }
+        .image-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .image-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        .image-item input { flex: 1; margin: 0 10px 0 0; }
+        .delete-btn { background: #666; }
+        .delete-btn:hover { background: #333; }
+        .add-image-btn { background: #28a745; }
+        .add-image-btn:hover { background: #218838; }
+        .upload-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .upload-section input[type="file"] {
+            margin: 10px 0;
+        }
+        .save-all-btn {
+            background: #007bff;
+            font-size: 18px;
+            padding: 15px 30px;
+        }
+        .save-all-btn:hover { background: #0056b3; }
+
+        /* Login styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .login-form {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-form h2 {
+            color: #FC0D0D;
+            margin-bottom: 20px;
+            text-transform: lowercase;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 15px;
+            background: #FC0D0D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-form button:hover { background: #cc0000; }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #666;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-btn:hover { background: #333; }
+    </style>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-form">
+            <h2>admin access</h2>
+            <input type="password" id="passwordInput" placeholder="Enter admin password" onkeypress="handleKeyPress(event)">
+            <button onclick="checkPassword()">Login</button>
+            <p style="color: #666; font-size: 14px; margin-top: 15px;">Contact administrator for access</p>
+        </div>
+    </div>
+
+    <!-- Main Admin Panel -->
+    <div id="adminPanel" style="display: none;">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <div class="admin-panel">
+            <h2 style="color: #FC0D0D; text-transform: lowercase;">portfolio manager</h2>
+
+            <div class="edit-card">
+                <h3>Homepage Hero Text</h3>
+                <label>Main Text:</label>
+                <textarea id="heroMainText" rows="6" placeholder="Enter main hero text..."></textarea>
+                <label>Sub Text:</label>
+                <textarea id="heroSubText" rows="4" placeholder="Enter sub hero text..."></textarea>
+            </div>
+
+            <div class="edit-card">
+                <h3>Recent Work Gallery</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Images are displayed with the most recently added first</p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Upload images from your local files or use existing image paths</p>
+                <div class="upload-section">
+                    <strong>Upload New Image:</strong>
+                    <input type="file" accept="image/*" id="galleryFileInput" onchange="uploadImage('gallery')">
+                    <input type="text" id="galleryAltInput" placeholder="Image description" style="margin-left: 10px; width: 200px;">
+                </div>
+                <div id="galleryImages"></div>
+                <button class="add-image-btn" onclick="addImage('gallery')">Add Image</button>
+            </div>
+
+            <div class="edit-card">
+                <h3>Photography Gallery</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Images are displayed with the most recently added first</p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Upload images from your local files or use existing image paths</p>
+                <div class="upload-section">
+                    <strong>Upload New Image:</strong>
+                    <input type="file" accept="image/*" id="photographyFileInput" onchange="uploadImage('photography')">
+                    <input type="text" id="photographyAltInput" placeholder="Image description" style="margin-left: 10px; width: 200px;">
+                </div>
+                <div id="photographyImages"></div>
+                <button class="add-image-btn" onclick="addImage('photography')">Add Image</button>
+            </div>
+
+            <div class="edit-card">
+                <h3>Work Gallery</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Images are displayed with the most recently added first</p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Upload images from your local files or use existing image paths</p>
+                <div class="upload-section">
+                    <strong>Upload New Image:</strong>
+                    <input type="file" accept="image/*" id="workFileInput" onchange="uploadImage('work')">
+                    <input type="text" id="workAltInput" placeholder="Image description" style="margin-left: 10px; width: 200px;">
+                </div>
+                <div id="workImages"></div>
+                <button class="add-image-btn" onclick="addImage('work')">Add Image</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="save-all-btn" onclick="saveAllChanges()">Save All Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Change this password to whatever you want
+        const ADMIN_PASSWORD = 'admin2024'; // Change this to your desired password
+
+        let siteData = {};
+
+        // Authentication functions
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                sessionStorage.setItem('loginTime', Date.now().toString());
+                showAdminPanel();
+            } else {
+                alert('Incorrect password. Access denied.');
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('loginTime');
+            showLoginForm();
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadData();
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        function checkLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            const loginTime = sessionStorage.getItem('loginTime');
+            
+            // Check if login is still valid (24 hours)
+            if (isLoggedIn && loginTime) {
+                const timeDiff = Date.now() - parseInt(loginTime);
+                const hours24 = 24 * 60 * 60 * 1000;
+                
+                if (timeDiff < hours24) {
+                    showAdminPanel();
+                    return;
+                } else {
+                    // Session expired
+                    sessionStorage.removeItem('adminLoggedIn');
+                    sessionStorage.removeItem('loginTime');
+                }
+            }
+            
+            showLoginForm();
+        }
+
+        // Load existing data
+        async function loadData() {
+            try {
+                const response = await fetch('../data.json');
+                siteData = await response.json();
+                populateForm();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Load from localStorage if fetch fails
+                const saved = localStorage.getItem('siteData');
+                if (saved) {
+                    siteData = JSON.parse(saved);
+                    populateForm();
+                }
+            }
+        }
+
+        function populateForm() {
+            // Hero text
+            document.getElementById('heroMainText').value = siteData.heroFull || '';
+            document.getElementById('heroSubText').value = siteData.heroSubFull || '';
+
+            // Gallery images
+            populateImageList('galleryImages', siteData.galleryImages || []);
+            populateImageList('photographyImages', siteData.photographyImages || []);
+            populateImageList('workImages', siteData.workImages || []);
+        }
+
+        function populateImageList(containerId, images) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            images.forEach((img, index) => {
+                const div = document.createElement('div');
+                div.className = 'image-item';
+                const filename = img.filename || 'Uploaded image';
+                div.innerHTML = `
+                    <img src="${img.src}" alt="${img.alt}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjI1IiB5PSIyNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vPC90ZXh0Pgo8L3N2Zz4='">
+                    <div style="flex: 1;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 5px;">${filename}</div>
+                        <input type="text" value="${img.alt}" placeholder="Alt text" onchange="updateImageAlt('${containerId}', ${index}, this.value)">
+                    </div>
+                    <button class="delete-btn" onclick="deleteImage('${containerId}', ${index})">Delete</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function uploadImage(galleryType) {
+            const fileInput = document.getElementById(galleryType + 'FileInput');
+            const altInput = document.getElementById(galleryType + 'AltInput');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            // Check if it's an image
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Check file size (limit to 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                const altText = altInput.value || file.name;
+                const arrayName = galleryType + 'Images';
+                
+                if (!siteData[arrayName]) siteData[arrayName] = [];
+                
+                // Add current timestamp for new images
+                const now = new Date().toISOString();
+                siteData[arrayName].push({ 
+                    src: dataUrl, 
+                    alt: altText,
+                    dateAdded: now,
+                    filename: file.name
+                });
+                
+                populateImageList(arrayName, siteData[arrayName]);
+                
+                // Clear the inputs
+                fileInput.value = '';
+                altInput.value = '';
+                
+                alert('Image uploaded successfully!');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function addImage(galleryType) {
+            const containerId = galleryType + 'Images';
+            const arrayName = galleryType + 'Images';
+
+            if (!siteData[arrayName]) siteData[arrayName] = [];
+            
+            // Add current timestamp for new images
+            const now = new Date().toISOString();
+            siteData[arrayName].push({ 
+                src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4=', 
+                alt: 'New image',
+                dateAdded: now
+            });
+            
+            populateImageList(containerId, siteData[arrayName]);
+        }
+
+        function deleteImage(containerId, index) {
+            const arrayName = containerId.replace('Images', 'Images');
+            siteData[arrayName].splice(index, 1);
+            populateImageList(containerId, siteData[arrayName]);
+        }
+
+        function updateImageAlt(containerId, index, newAlt) {
+            const arrayName = containerId.replace('Images', 'Images');
+            siteData[arrayName][index].alt = newAlt;
+        }
+
+        function saveAllChanges() {
+            // Update text content
+            siteData.heroFull = document.getElementById('heroMainText').value;
+            siteData.heroSubFull = document.getElementById('heroSubText').value;
+
+            // Save to localStorage
+            localStorage.setItem('siteData', JSON.stringify(siteData));
+
+            alert('Changes saved successfully! The website will reflect changes when pages are refreshed.');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>
