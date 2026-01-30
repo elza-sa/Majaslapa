@@ -4,51 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography — līva drauga</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Base styles */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            padding: 0;
+            font-family: 'IBM Plex Mono', monospace;
             color: #333;
-            position: relative;
-        }
-
-        .grid-bg {
+            
+            /* GLOBAL GRID BACKGROUND */
             background-color: white;
             background-image:
-                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
-                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+                linear-gradient(to right, #b0b0b0 1px, transparent 1px),
+                linear-gradient(to bottom, #b0b0b0 1px, transparent 1px);
             background-size: 20px 20px;
-            min-height: 100vh;
+            /* "fixed" keeps the grid from moving when you scroll */
+            background-attachment: fixed; 
         }
 
+        .grid-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER - Transparent with a slight blur for readability */
         .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background-color: white;
-            border-bottom: 1px solid #e0e0e0;
+            background-color: rgba(255, 255, 255, 0.6); 
+            border-bottom: 2px solid #000;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
         }
         
         .logo img {
             height: 100px;
             display: block;
+            transition: height 0.3s ease;
         }
 
         .menu {
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            flex-wrap: nowrap;
+            white-space: nowrap;
         }
 
         .menu a {
-            color: #1b1818;
+            color: #000;
             padding: 15px 16px;
             text-decoration: none;
             font-size: 20px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: color 0.3s ease;
             text-transform: lowercase;
         }
 
@@ -56,6 +73,7 @@
             color: #FC0D0D;
         }
 
+        /* DROPDOWN */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -68,12 +86,12 @@
             background-color: #000;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10;
+            z-index: 1001;
             border-radius: 10px;
         }
         
         .dropdown-content a {
-            color: #FC0D0D;
+            color: #fff;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
@@ -83,9 +101,11 @@
         }
 
         .dropdown-content a:hover {
-            background-color: #444;
+            color: #FC0D0D;
+            background-color: #222;
         }
 
+        /* GALLERY SECTION */
         .work-gallery {
             display: flex;
             justify-content: center;
@@ -102,47 +122,55 @@
             flex: 1;
         }
 
+        /* GALLERY ITEMS */
         .gallery-item {
             overflow: hidden;
-            transition: transform 0.3s ease;
+            cursor: pointer;
+            border-radius: 40px;
         }
         
         .gallery-item img {
             width: 100%;
             height: auto;
-            border-radius: 40px; /* Samazināts no 96px labākam izskatam */
+            border-radius: 40px;
             display: block;
             border: 12px solid black;
-            filter: sepia(0.3) saturate(1.2);
-            transition: all 0.4s ease;
             box-sizing: border-box;
+            /* Photography filter */
+            filter: sepia(0.7) saturate(1.8) brightness(0.9) hue-rotate(-10deg);
+            transition: filter 0.2s ease;
         }
 
-        .gallery-item img:hover {
+        .gallery-item.no-filter img {
             filter: none;
-            transform: scale(1.02);
-            border-color: #FC0D0D;
         }
 
-        @media (max-width: 767px) {
-            .work-gallery {
-                flex-direction: column;
-                padding: 20px;
-            }
-            .header-row {
-                flex-direction: column;
-            }
-            .menu {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .menu a { font-size: 16px; padding: 10px 12px; }
+            .logo img { height: 75px; }
         }
 
+        @media (max-width: 768px) {
+            .menu a { font-size: 14px; padding: 10px 8px; }
+            .logo img { height: 60px; }
+        }
+
+        @media (max-width: 600px) {
+            .work-gallery { flex-direction: column; padding: 20px; }
+            .header-row { padding: 5px 10px; }
+            .menu a { font-size: 12px; padding: 8px 6px; }
+            .logo img { height: 50px; }
+            .gallery-item img { border-width: 8px; border-radius: 30px; }
+            .gallery-item { border-radius: 30px; }
+        }
+
+        /* BACK TO TOP */
         .back-to-top {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #FC0D0D;
+            background-color: #000;
             color: white;
             width: 50px;
             height: 50px;
@@ -153,20 +181,13 @@
             text-decoration: none;
             font-size: 24px;
             z-index: 100;
-            transition: transform 0.3s;
         }
 
-        .back-to-top:hover {
-            transform: translateY(-5px);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
-    <div class="grid-bg">
+    <div class="grid-container">
         <header class="header-row" id="top">
             <div class="logo">
                 <img alt="Līva Drauga logo" src="./images/livadrauga.png" onerror="this.src='https://placehold.co/200x100?text=Liva+Drauga'"/>
@@ -186,40 +207,32 @@
             </nav>
         </header>
 
-        <section>
+        <main>
             <div class="work-gallery" id="mainGallery">
-                <!-- First column of images -->
                 <div class="gallery-column">
-                    <div class="gallery-item">
-                        <img src="./images/peleka tina.png" alt="Black and white photo" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/peleka tina.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
-                    <div class="gallery-item">
-                        <img src="./images/kamerina.png" alt="Small room" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/kamerina.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
-                    <div class="gallery-item">
-                        <img src="./images/ratini.png" alt="Wheels" onerror="handleImageError(this)" />
-                    </div>
-                    <div class="gallery-item">
-                        <img src="./images/sarkani lauki.png" alt="Red fields" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/ratini.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
                 </div>
-                <!-- Second column of images -->
                 <div class="gallery-column">
-                    <div class="gallery-item">
-                        <img src="./images/tina.png" alt="Plant" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/tina.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
-                    <div class="gallery-item">
-                        <img src="./images/vienradzite.png" alt="Unicorn" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/vienradzite.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
-                    <div class="gallery-item">
-                        <img src="./images/mamma.png" alt="Woman" onerror="handleImageError(this)" />
-                    </div>
-                    <div class="gallery-item">
-                        <img src="./images/blue.png" alt="Blue toned" onerror="handleImageError(this)" />
+                    <div class="gallery-item" onclick="toggleImageFilter(this)">
+                        <img src="./images/mamma.png" alt="Photography" onerror="handleImageError(this)" />
                     </div>
                 </div>
             </div>
-        </section>
+        </main>
         
         <a href="#top" class="back-to-top">↑</a>
     </div>
@@ -231,6 +244,10 @@
             dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
         }
 
+        function toggleImageFilter(element) {
+            element.classList.toggle('no-filter');
+        }
+
         function handleImageError(img) {
             img.onerror = null;
             img.src = 'https://placehold.co/400x500/e0e0e0/333333?text=Image+Missing';
@@ -240,27 +257,10 @@
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.dropdown')) {
-                document.getElementById('workDropdown').style.display = 'none';
+                const dd = document.getElementById('workDropdown');
+                if(dd) dd.style.display = 'none';
             }
         });
-
-        // Optional: Keep your dynamic loading logic but check if data exists first
-        async function loadExtraContent() {
-            try {
-                const response = await fetch('data.json');
-                if (!response.ok) return; // Exit if file doesn't exist
-                
-                const data = await response.json();
-                if (data.photographyImages) {
-                    // Logic to append more images if you want to use data.json in the future
-                    console.log("External data loaded");
-                }
-            } catch (e) {
-                console.log("No data.json found, using HTML defaults.");
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadExtraContent);
     </script>
 </body>
 </html>
