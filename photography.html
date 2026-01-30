@@ -11,6 +11,7 @@
 /* BASE */
 body {
     margin: 0;
+    padding: 0;
     font-family: 'IBM Plex Mono', monospace;
     background-color: white;
     background-image:
@@ -19,7 +20,7 @@ body {
     background-size: 20px 20px;
 }
 
-/* HEADER – no blur, graphic-page style */
+/* HEADER – SAME AS GRAPHIC PAGE */
 .header-row {
     display: flex;
     justify-content: space-between;
@@ -47,12 +48,13 @@ body {
 }
 
 .menu a {
+    color: #1b1818;
     padding: 15px 16px;
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
-    color: #000;
     text-transform: lowercase;
+    transition: color 0.3s ease;
 }
 
 .menu a:hover,
@@ -72,6 +74,7 @@ body {
     background-color: black;
     min-width: 160px;
     border-radius: 10px;
+    z-index: 1001;
 }
 
 .dropdown-content a {
@@ -79,44 +82,49 @@ body {
     padding: 12px 16px;
     display: block;
     font-size: 16px;
+    font-weight: normal;
 }
 
 .dropdown-content a:hover {
-    background-color: #222;
+    background-color: #444;
     color: #FC0D0D;
 }
 
-/* GALLERY */
+/* GALLERY – LAYOUT UNCHANGED */
 .work-gallery {
     display: flex;
+    justify-content: center;
     gap: 20px;
     padding: 40px;
     max-width: 1200px;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .gallery-column {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    flex: 1;
 }
 
 .gallery-item {
-    cursor: pointer;
-    border-radius: 40px;
     overflow: hidden;
+    cursor: pointer;
+    border-radius: 45px;
 }
 
+/* IMAGE LOOK – SAME AS GRAPHIC PAGE */
 .gallery-item img {
     width: 100%;
-    border-radius: 40px;
-    border: 12px solid black;
+    height: auto;
+    display: block;
+    border-radius: 45px;
+    border: 8px solid black;
     box-sizing: border-box;
 
-    /* YELLOW FILTER */
-    filter: sepia(0.4) saturate(2.2) hue-rotate(20deg) brightness(1.05);
-    transition: filter 0.25s ease;
+    /* Graphic-page yellow look */
+    filter: sepia(0.7) saturate(2) hue-rotate(15deg);
+    transition: filter 0.3s ease-in-out;
 }
 
 .gallery-item.no-filter img {
@@ -128,19 +136,20 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: black;
+    background-color: #FC0D0D;
     color: white;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     text-decoration: none;
-    font-size: 22px;
+    font-size: 24px;
+    z-index: 100;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE – NO LAYOUT CHANGE */
 @media (max-width: 768px) {
     .work-gallery {
         flex-direction: column;
@@ -156,7 +165,9 @@ body {
     }
 }
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 </style>
 </head>
 
@@ -164,7 +175,8 @@ html { scroll-behavior: smooth; }
 
 <header class="header-row" id="top">
     <div class="logo">
-        <img src="./images/livadrauga.png" alt="Līva Drauga logo">
+        <img src="./images/livadrauga.png" alt="Līva Drauga logo"
+             onerror="this.src='https://placehold.co/200x100?text=Liva+Drauga'">
     </div>
 
     <nav class="menu">
@@ -173,7 +185,7 @@ html { scroll-behavior: smooth; }
 
         <div class="dropdown">
             <a href="#" onclick="toggleDropdown(event)" class="active">work</a>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="workDropdown">
                 <a href="photography.html">photography</a>
                 <a href="graphic.html">graphic</a>
                 <a href="illustrations.html">illustrations</a>
@@ -188,25 +200,25 @@ html { scroll-behavior: smooth; }
 <div class="work-gallery">
     <div class="gallery-column">
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/peleka tina.png">
+            <img src="./images/peleka tina.png" alt="Photography">
         </div>
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/kamerina.png">
+            <img src="./images/kamerina.png" alt="Photography">
         </div>
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/ratini.png">
+            <img src="./images/ratini.png" alt="Photography">
         </div>
     </div>
 
     <div class="gallery-column">
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/tina.png">
+            <img src="./images/tina.png" alt="Photography">
         </div>
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/vienradzite.png">
+            <img src="./images/vienradzite.png" alt="Photography">
         </div>
         <div class="gallery-item" onclick="toggleImageFilter(this)">
-            <img src="./images/mamma.png">
+            <img src="./images/mamma.png" alt="Photography">
         </div>
     </div>
 </div>
@@ -215,20 +227,20 @@ html { scroll-behavior: smooth; }
 <a href="#top" class="back-to-top">↑</a>
 
 <script>
-function toggleDropdown(e) {
-    e.preventDefault();
-    const menu = e.target.nextElementSibling;
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById('workDropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
 }
 
-function toggleImageFilter(el) {
-    el.classList.toggle('no-filter');
+function toggleImageFilter(element) {
+    element.classList.toggle('no-filter');
 }
 
-document.addEventListener('click', e => {
-    if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-content')
-        .forEach(d => d.style.display = 'none');
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.dropdown')) {
+        const dd = document.getElementById('workDropdown');
+        if (dd) dd.style.display = 'none';
     }
 });
 </script>
