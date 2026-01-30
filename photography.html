@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography — līva drauga</title>
-    <!-- 
-        The CSS styles have been updated to create a two-column layout for the image gallery.
-        This new layout is responsive and matches the arrangement in the provided image.
-    -->
     <style>
         body {
             margin: 0;
@@ -17,41 +13,29 @@
             position: relative;
         }
 
-        /* The main grid background for the entire body */
         .grid-bg {
             background-color: white;
             background-image:
                 linear-gradient(to right, #e0e0e0 1px, transparent 1px),
                 linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
             background-size: 20px 20px;
+            min-height: 100vh;
         }
 
-        /*
-         * The header container with a white background and grid pattern.
-         * Using Flexbox to align the logo and menu horizontally.
-         */
         .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
             background-color: white;
-            background-image:
-                linear-gradient(to right, #e0e0e0 1px, transparent 1px),
-                linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
-            background-size: 20px 20px;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        /* Red color for the logo title */
-        .logo-title {
-            font-size: 24px;
-            font-weight: bold;
-            line-height: 1.2;
-            color: #FC0D0D;
-            text-transform: lowercase;
+        .logo img {
+            height: 100px;
+            display: block;
         }
 
-        /* Navigation styling to align links to the right */
         .menu {
             display: flex;
             justify-content: flex-end;
@@ -59,14 +43,12 @@
         }
 
         .menu a {
-            display: block;
             color: #1b1818;
             padding: 15px 16px;
             text-decoration: none;
             font-size: 20px;
             font-weight: bold;
             transition: all 0.3s ease;
-            text-align: center;
             text-transform: lowercase;
         }
 
@@ -74,8 +56,6 @@
             color: #FC0D0D;
         }
 
-        /* Dropdown menu styling */
-        /* Dropdown menu styling */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -88,12 +68,11 @@
             background-color: #000;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
+            z-index: 10;
             border-radius: 10px;
         }
         
         .dropdown-content a {
-            float: none;
             color: #FC0D0D;
             padding: 12px 16px;
             text-decoration: none;
@@ -106,121 +85,81 @@
         .dropdown-content a:hover {
             background-color: #444;
         }
-        
-        /* Main content and gallery styles */
+
         .work-gallery {
             display: flex;
             justify-content: center;
-            gap: px;
+            gap: 20px;
             padding: 40px;
-            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .gallery-column {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            /* Allow columns to grow but not shrink to prevent content distortion */
-            flex: 1 0 0;
-        }
-
-        /* Media query for responsive design on smaller screens */
-        @media (max-width: 767px) {
-            .header-row {
-                flex-direction: column;
-                align-items: center;
-                padding: 15px;
-            }
-
-            .logo {
-                margin-bottom: 10px;
-            }
-
-            .menu {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                margin-top: 10px;
-                gap: 15px;
-            }
-
-            .menu a {
-                padding: 8px 12px;
-                font-size: 18px;
-            }
-
-            .work-gallery {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-row {
-                padding: 10px;
-            }
-
-            .logo {
-                margin-bottom: 5px;
-            }
-
-            .menu {
-                gap: 10px;
-            }
-
-            .menu a {
-                padding: 6px 10px;
-                font-size: 16px;
-            }
+            flex: 1;
         }
 
         .gallery-item {
-          /*  background-color: #fff;*/
-            border-radius: 25px;
-            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
             overflow: hidden;
-            padding: 35px;
+            transition: transform 0.3s ease;
         }
         
         .gallery-item img {
             width: 100%;
             height: auto;
-            border-radius: 96px;
-            margin-bottom: 26px;
-            object-fit: cover;
-            border: 16px solid black;
-            filter: sepia(0.7) saturate(1.5) hue-rotate(15deg); /* Slightly reduced the filter intensity */
-            transition: filter 0.3s ease-in-out;
+            border-radius: 40px; /* Samazināts no 96px labākam izskatam */
+            display: block;
+            border: 12px solid black;
+            filter: sepia(0.3) saturate(1.2);
+            transition: all 0.4s ease;
+            box-sizing: border-box;
         }
 
         .gallery-item img:hover {
-            filter: none; /* Removes the filter on hover */
+            filter: none;
+            transform: scale(1.02);
+            border-color: #FC0D0D;
         }
-        
-        /* Back-to-top button styling */
+
+        @media (max-width: 767px) {
+            .work-gallery {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .header-row {
+                flex-direction: column;
+            }
+            .menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
         .back-to-top {
             position: fixed;
             bottom: 20px;
             right: 20px;
             background-color: #FC0D0D;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             text-decoration: none;
             font-size: 24px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease;
             z-index: 100;
+            transition: transform 0.3s;
         }
 
         .back-to-top:hover {
-            background-color: #a00c0c;
+            transform: translateY(-5px);
         }
 
-        /* Scroll behavior for smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
@@ -230,165 +169,98 @@
     <div class="grid-bg">
         <header class="header-row" id="top">
             <div class="logo">
-                <img alt="Līva Drauga logo" src="./images/livadrauga.png" style="height: 100px;"/>
+                <img alt="Līva Drauga logo" src="./images/livadrauga.png" onerror="this.src='https://placehold.co/200x100?text=Liva+Drauga'"/>
             </div>
             <nav class="menu">
-                <a href="index.html" target="_self" title="Home">home</a>
-                <a href="about.html" target="_self" title="About Me">about me</a>
+                <a href="index.html">home</a>
+                <a href="about.html">about me</a>
                 <div class="dropdown">
-                    <a href="#" onclick="toggleDropdown(event)"  class="active" target="_self" title="Work">work</a>
-                    <div class="dropdown-content">
-                        <a href="photography.html" >photography</a>
-                        <a href="graphic.html" target="_self">graphic</a>
-                        <a href="illustrations.html" target="_self">illustrations</a>
+                    <a href="#" onclick="toggleDropdown(event)" class="active">work</a>
+                    <div class="dropdown-content" id="workDropdown">
+                        <a href="photography.html">photography</a>
+                        <a href="graphic.html">graphic</a>
+                        <a href="illustrations.html">illustrations</a>
                     </div>
                 </div>
-                <a href="contact.html" target="_self" title="Contact Me">contact me</a>
+                <a href="contact.html">contact me</a>
             </nav>
         </header>
 
         <section>
-            <div class="work-gallery">
+            <div class="work-gallery" id="mainGallery">
                 <!-- First column of images -->
+                <div class="gallery-column">
                     <div class="gallery-item">
-                        <img src="./images/peleka_tina.png" alt="" />
-                     <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/peleka tina.png" alt="Black and white photo" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/kamerina.png" alt="" />
-                        <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/kamerina.png" alt="Small room" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/ratini.png" alt="" />
-                         <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/ratini.png" alt="Wheels" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/sarkani lauki.png" alt="" />
-                         <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/sarkani lauki.png" alt="Red fields" onerror="handleImageError(this)" />
                     </div>
                 </div>
                 <!-- Second column of images -->
                 <div class="gallery-column">
                     <div class="gallery-item">
-                        <img src="./images/tina.png" alt=""/>
-                         <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/tina.png" alt="Plant" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/vienradzite.png" alt="Photo of a unicorn statue" alt="Drauga visual identity" onerror="this.onerror=null;this.src='https://placehold.co/400x300/e0e0e0/333333?text=Image+Not+Found'" />
-                        <div class="caption">Zine “How to shop second hand”</div>
-
+                        <img src="./images/vienradzite.png" alt="Unicorn" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/mamma.png" alt="" />
-                          <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/mamma.png" alt="Woman" onerror="handleImageError(this)" />
                     </div>
                     <div class="gallery-item">
-                        <img src="./images/blue.png" alt="" />
-                        <div class="caption">Zine “How to shop second hand”</div>
+                        <img src="./images/blue.png" alt="Blue toned" onerror="handleImageError(this)" />
                     </div>
-                
+                </div>
             </div>
         </section>
         
-        <!-- Back to top button -->
-        <a href="#top" class="back-to-top" aria-label="Back to top">
-            ↑
-        </a>
+        <a href="#top" class="back-to-top">↑</a>
     </div>
 
     <script>
         function toggleDropdown(event) {
             event.preventDefault();
-            const dropdown = event.target.parentElement;
-            const dropdownContent = dropdown.querySelector('.dropdown-content');
-            
-            // Close other dropdowns
-            document.querySelectorAll('.dropdown-content').forEach(content => {
-                if (content !== dropdownContent) {
-                    content.style.display = 'none';
-                }
-            });
-            
-            // Toggle current dropdown
-            if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
-            } else {
-                dropdownContent.style.display = 'block';
-            }
+            const dropdown = document.getElementById('workDropdown');
+            dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function handleImageError(img) {
+            img.onerror = null;
+            img.src = 'https://placehold.co/400x500/e0e0e0/333333?text=Image+Missing';
+            img.style.filter = 'none';
         }
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown-content').forEach(content => {
-                    content.style.display = 'none';
-                });
+                document.getElementById('workDropdown').style.display = 'none';
             }
         });
 
-        // Close dropdown on escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                document.querySelectorAll('.dropdown-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-            }
-        });
-
-        async function loadPhotographyContent() {
+        // Optional: Keep your dynamic loading logic but check if data exists first
+        async function loadExtraContent() {
             try {
-                // Try to load from localStorage first (for admin changes)
-                let data = JSON.parse(localStorage.getItem('siteData'));
-
-                // If no localStorage data, load from data.json
-                if (!data) {
-                    const response = await fetch('data.json');
-                    data = await response.json();
+                const response = await fetch('data.json');
+                if (!response.ok) return; // Exit if file doesn't exist
+                
+                const data = await response.json();
+                if (data.photographyImages) {
+                    // Logic to append more images if you want to use data.json in the future
+                    console.log("External data loaded");
                 }
-
-                // Update photography gallery (sorted by most recent first)
-                if (data.photographyImages && data.photographyImages.length > 0) {
-                    const galleryColumns = document.querySelectorAll('.gallery-column');
-                    
-                    // Clear existing images
-                    galleryColumns.forEach(column => column.innerHTML = '');
-                    
-                    // Sort images by dateAdded (most recent first)
-                    const sortedImages = [...data.photographyImages].sort((a, b) => 
-                        new Date(b.dateAdded || '2024-01-01') - new Date(a.dateAdded || '2024-01-01')
-                    );
-                    
-                    // Distribute images across columns
-                    sortedImages.forEach((img, index) => {
-                        const columnIndex = index % 2; // Alternate between 2 columns
-                        const column = galleryColumns[columnIndex];
-                        
-                        const galleryItem = document.createElement('div');
-                        galleryItem.className = 'gallery-item';
-                        
-                        const imgElement = document.createElement('img');
-                        imgElement.src = img.src;
-                        imgElement.alt = img.alt;
-                        imgElement.onerror = function() {
-                        };
-                        
-                        galleryItem.appendChild(imgElement);
-                        column.appendChild(galleryItem);
-                    });
-                }
-
-            } catch (error) {
-                console.error('Error loading photography content:', error);
+            } catch (e) {
+                console.log("No data.json found, using HTML defaults.");
             }
         }
 
-        // Load content when page loads
-        document.addEventListener('DOMContentLoaded', loadPhotographyContent);
+        document.addEventListener('DOMContentLoaded', loadExtraContent);
     </script>
 </body>
 </html>
-
-
-
-
-
