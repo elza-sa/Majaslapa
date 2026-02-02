@@ -6,6 +6,7 @@
 <title>līva drauga</title>
 
 <style>
+/* ===== BASE ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -21,7 +22,7 @@ body {
     background-size: 20px 20px;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 .header-row {
     display: flex;
     justify-content: space-between;
@@ -29,7 +30,6 @@ body {
     padding: 10px 20px;
 }
 
-/* MENU */
 .menu {
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@ body {
     color: #FC0D0D;
 }
 
-/* DROPDOWN */
+/* ===== DROPDOWN ===== */
 .dropdown {
     position: relative;
 }
@@ -73,31 +73,65 @@ body {
     display: block;
 }
 
-/* HERO */
+/* ===== MAIN CONTENT ===== */
 .main-content {
     display: grid;
+    gap: 20px;
+    padding: 20px 40px;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-        "black-text solini"
+        "text solini"
         "zale zale";
-    gap: 20px;
-    padding: 40px;
 }
 
-.black-text-container { grid-area: black-text; }
-.solini-image-container { grid-area: solini; }
-.zale-section { grid-area: zale; position: relative; }
+.black-text-container {
+    grid-area: text;
+}
 
 .black-text {
     font-size: 2.5em;
+    color: black;
 }
 
-.solini-image-container img,
+.solini-image-container {
+    grid-area: solini;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.solini-image-container img {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ===== ZĀLE ===== */
+.zale-section {
+    grid-area: zale;
+    position: relative;
+}
+
+.overlay-container {
+    position: relative;
+}
+
 .zale-section img {
     width: 100%;
 }
 
-/* GALLERY */
+.overlay-text {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    z-index: 10;
+}
+
+.yellow-text {
+    color: #EFF315;
+    font-size: clamp(1.1em, 4vw, 2.5em);
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* ===== GALLERY ===== */
 .gallery-section {
     padding: 40px;
 }
@@ -111,8 +145,8 @@ body {
 .gallery-item {
     position: relative;
     height: 200px;
-    overflow: hidden;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .gallery-item img {
@@ -128,7 +162,7 @@ body {
     background-color: rgba(239,243,21,0.25);
 }
 
-/* BACK TO TOP */
+/* ===== BACK TO TOP ===== */
 .back-to-top {
     position: fixed;
     bottom: 20px;
@@ -141,11 +175,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 </style>
 </head>
 
 <body>
+<div class="grid-bg">
 
 <header class="header-row" id="top">
     <img src="./images/livadrauga.png" alt="logo" style="height:100px">
@@ -168,7 +204,12 @@ body {
 <section class="main-content">
     <div class="black-text-container">
         <h3 class="black-text" id="hero-main-text">
-            Hi,<br> this is a place, where<br> creative freedom meets art
+            Hi,<br>
+            this is a place, where <br>
+            creative freedom,<br>
+            emotions and simplicity <br>
+            of life meets art and <br>
+            creates visualizations <br>
         </h3>
     </div>
 
@@ -177,25 +218,38 @@ body {
     </div>
 
     <div class="zale-section">
-        <img src="./images/zale.png" alt="zale">
+        <div class="overlay-container">
+            <img src="./images/zale.png" alt="zale">
+            <div class="overlay-text">
+                <span class="yellow-text" id="hero-sub-text">
+                    of feelings and <br>
+                    emotional expressions.<br>
+                    If we are somewhat <br>
+                    alike, maybe we can <br>
+                    express our emotions in<br>
+                    art together..
+                </span>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="gallery-section">
-    <h2 style="text-align:center;color:#FC0D0D;text-transform:lowercase">
-        recent work
-    </h2>
+<h2 style="text-align:center;color:#FC0D0D;text-transform:lowercase">
+    recent work
+</h2>
 
-    <div class="gallery-grid" id="galleryGrid">
-        <!-- fallback images -->
-        <div class="gallery-item"><img src="./images/drauga.png"></div>
-        <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
-        <div class="gallery-item"><img src="./images/kamerina.png"></div>
-        <div class="gallery-item"><img src="./images/nintendo-02 1.png"></div>
-    </div>
+<div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item"><img src="./images/drauga.png"></div>
+    <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
+    <div class="gallery-item"><img src="./images/kamerina.png"></div>
+    <div class="gallery-item"><img src="./images/nintendo-02 1.png"></div>
+</div>
 </section>
 
 <a href="#top" class="back-to-top">↑</a>
+
+</div>
 
 <script>
 function toggleDropdown(e) {
@@ -204,33 +258,38 @@ function toggleDropdown(e) {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* ADMIN-CONNECTED GALLERY */
-function loadGallery() {
-    let data = localStorage.getItem("siteData");
-    if (!data) return;
+/* LOAD FROM ADMIN */
+function loadFromAdmin() {
+    const stored = localStorage.getItem("siteData");
+    if (!stored) return;
 
-    data = JSON.parse(data);
-    if (!data.galleryImages || data.galleryImages.length === 0) return;
+    const data = JSON.parse(stored);
 
-    const grid = document.getElementById("galleryGrid");
-    grid.innerHTML = "";
+    if (data.heroFull)
+        document.getElementById("hero-main-text").innerHTML = data.heroFull;
 
-    data.galleryImages
-        .sort((a,b)=>new Date(b.dateAdded)-new Date(a.dateAdded))
-        .forEach(img=>{
-            const item = document.createElement("div");
-            item.className = "gallery-item";
+    if (data.heroSubFull)
+        document.getElementById("hero-sub-text").innerHTML = data.heroSubFull;
 
-            const image = document.createElement("img");
-            image.src = img.src;
-            image.alt = img.alt || "recent work";
+    if (Array.isArray(data.galleryImages) && data.galleryImages.length) {
+        const grid = document.getElementById("galleryGrid");
+        grid.innerHTML = "";
 
-            item.appendChild(image);
-            grid.appendChild(item);
-        });
+        data.galleryImages
+            .sort((a,b)=>new Date(b.dateAdded)-new Date(a.dateAdded))
+            .forEach(img=>{
+                const div=document.createElement("div");
+                div.className="gallery-item";
+                const i=document.createElement("img");
+                i.src=img.src;
+                i.alt=img.alt||"recent work";
+                div.appendChild(i);
+                grid.appendChild(div);
+            });
+    }
 }
 
-document.addEventListener("DOMContentLoaded", loadGallery);
+document.addEventListener("DOMContentLoaded", loadFromAdmin);
 </script>
 
 </body>
