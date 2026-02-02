@@ -201,6 +201,36 @@ body {
         left: 20px; /* ✅ yellow text stays visible */
     }
 }
+@media (max-width: 768px) {
+
+    .header-row {
+        flex-direction: column;          /* stack logo + menu */
+        align-items: center;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .header-row img {
+        margin-bottom: 10px;             /* space between logo and menu */
+    }
+
+    .menu {
+        justify-content: center;
+        flex-wrap: wrap;                 /* allow wrapping if needed */
+        gap: 14px;
+    }
+
+    .menu a {
+        font-size: 16px;                 /* slightly smaller for mobile */
+        padding: 8px 10px;
+    }
+
+    .dropdown-content {
+        right: 50%;
+        transform: translateX(50%);      /* center dropdown under "work" */
+    }
+}
+
    
 </style>
 </head>
@@ -319,5 +349,6 @@ document.addEventListener("DOMContentLoaded", loadFromAdmin);
 
 </body>
 </html>
+
 
 
