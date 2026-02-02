@@ -101,7 +101,7 @@ body {
 
 .solini-image-container img {
     width: 100%;
-    max-width: 400px;
+    max-width: 520px;
     border-radius: 8px;
 
 }
@@ -179,6 +179,29 @@ body {
     justify-content: center;
     text-decoration: none;
 }
+ @media (max-width: 768px) {
+
+    .main-content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "text"
+            "zale"
+            "solini"; /* ✅ solini goes under zale */
+    }
+
+    .solini-image-container {
+        justify-content: center;
+    }
+
+    .solini-image-container img {
+        max-width: 90%; /* ✅ looks good on mobile */
+    }
+
+    .overlay-text {
+        left: 20px; /* ✅ yellow text stays visible */
+    }
+}
+   
 </style>
 </head>
 
@@ -296,4 +319,5 @@ document.addEventListener("DOMContentLoaded", loadFromAdmin);
 
 </body>
 </html>
+
 
