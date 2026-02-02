@@ -29,23 +29,21 @@ body {
     padding: 10px 20px;
 }
 
-/* MENU — FIXED TO ONE LINE */
+/* MENU */
 .menu {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;        /* ✅ FIX */
+    flex-wrap: nowrap;
 }
 
 .menu a {
-    display: block;
     color: #1b1818;
     padding: 12px 14px;
     text-decoration: none;
     font-size: 17px;
     font-weight: bold;
-    white-space: nowrap;     /* ✅ FIX */
-    transition: all 0.3s ease;
+    white-space: nowrap;
     text-transform: lowercase;
 }
 
@@ -75,6 +73,30 @@ body {
     display: block;
 }
 
+/* HERO */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "black-text solini"
+        "zale zale";
+    gap: 20px;
+    padding: 40px;
+}
+
+.black-text-container { grid-area: black-text; }
+.solini-image-container { grid-area: solini; }
+.zale-section { grid-area: zale; position: relative; }
+
+.black-text {
+    font-size: 2.5em;
+}
+
+.solini-image-container img,
+.zale-section img {
+    width: 100%;
+}
+
 /* GALLERY */
 .gallery-section {
     padding: 40px;
@@ -89,8 +111,8 @@ body {
 .gallery-item {
     position: relative;
     height: 200px;
-    border-radius: 8px;
     overflow: hidden;
+    border-radius: 8px;
 }
 
 .gallery-item img {
@@ -99,7 +121,6 @@ body {
     object-fit: cover;
 }
 
-/* YELLOW FILTER */
 .gallery-item::after {
     content: "";
     position: absolute;
@@ -144,18 +165,34 @@ body {
     </nav>
 </header>
 
-<section class="gallery-section">
-<h2 style="text-align:center;color:#FC0D0D;text-transform:lowercase">
-    recent work
-</h2>
+<section class="main-content">
+    <div class="black-text-container">
+        <h3 class="black-text" id="hero-main-text">
+            Hi,<br> this is a place, where<br> creative freedom meets art
+        </h3>
+    </div>
 
-<div class="gallery-grid" id="galleryGrid">
-    <!-- fallback images (used only if no admin data exists) -->
-    <div class="gallery-item"><img src="./images/drauga.png"></div>
-    <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
-    <div class="gallery-item"><img src="./images/kamerina.png"></div>
-    <div class="gallery-item"><img src="./images/nintendo-02 1.png"></div>
-</div>
+    <div class="solini-image-container">
+        <img src="./images/solini1 1.png" alt="solini">
+    </div>
+
+    <div class="zale-section">
+        <img src="./images/zale.png" alt="zale">
+    </div>
+</section>
+
+<section class="gallery-section">
+    <h2 style="text-align:center;color:#FC0D0D;text-transform:lowercase">
+        recent work
+    </h2>
+
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- fallback images -->
+        <div class="gallery-item"><img src="./images/drauga.png"></div>
+        <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
+        <div class="gallery-item"><img src="./images/kamerina.png"></div>
+        <div class="gallery-item"><img src="./images/nintendo-02 1.png"></div>
+    </div>
 </section>
 
 <a href="#top" class="back-to-top">↑</a>
@@ -167,42 +204,33 @@ function toggleDropdown(e) {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* LOAD GALLERY FROM ADMIN DATA */
-function loadGalleryFromAdmin() {
-    const stored = localStorage.getItem("siteData");
-    if (!stored) return;
+/* ADMIN-CONNECTED GALLERY */
+function loadGallery() {
+    let data = localStorage.getItem("siteData");
+    if (!data) return;
 
-    let data;
-    try {
-        data = JSON.parse(stored);
-    } catch {
-        return;
-    }
-
-    if (!Array.isArray(data.galleryImages) || data.galleryImages.length === 0) return;
+    data = JSON.parse(data);
+    if (!data.galleryImages || data.galleryImages.length === 0) return;
 
     const grid = document.getElementById("galleryGrid");
     grid.innerHTML = "";
 
     data.galleryImages
-        .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
-        .forEach(img => {
-            const div = document.createElement("div");
-            div.className = "gallery-item";
+        .sort((a,b)=>new Date(b.dateAdded)-new Date(a.dateAdded))
+        .forEach(img=>{
+            const item = document.createElement("div");
+            item.className = "gallery-item";
 
             const image = document.createElement("img");
             image.src = img.src;
             image.alt = img.alt || "recent work";
-            image.onerror = () => {
-                image.src = "https://placehold.co/400x300?text=Image+Not+Found";
-            };
 
-            div.appendChild(image);
-            grid.appendChild(div);
+            item.appendChild(image);
+            grid.appendChild(item);
         });
 }
 
-document.addEventListener("DOMContentLoaded", loadGalleryFromAdmin);
+document.addEventListener("DOMContentLoaded", loadGallery);
 </script>
 
 </body>
