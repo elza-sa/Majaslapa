@@ -29,11 +29,12 @@ body {
     padding: 10px 20px;
 }
 
-/* MENU */
+/* MENU — FIXED TO ONE LINE */
 .menu {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: nowrap;        /* ✅ FIX */
 }
 
 .menu a {
@@ -41,9 +42,9 @@ body {
     color: #1b1818;
     padding: 12px 14px;
     text-decoration: none;
-    font-size: 17px;      /* ✅ smaller */
+    font-size: 17px;
     font-weight: bold;
-    white-space: nowrap; /* ✅ one line */
+    white-space: nowrap;     /* ✅ FIX */
     transition: all 0.3s ease;
     text-transform: lowercase;
 }
@@ -72,22 +73,6 @@ body {
     color: #FC0D0D;
     padding: 12px 16px;
     display: block;
-}
-
-/* HERO */
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 40px;
-}
-
-.black-text {
-    font-size: 2.5em;
-}
-
-.zale-section img {
-    width: 100%;
 }
 
 /* GALLERY */
@@ -160,10 +145,12 @@ body {
 </header>
 
 <section class="gallery-section">
-<h2 style="text-align:center;color:#FC0D0D">recent work</h2>
+<h2 style="text-align:center;color:#FC0D0D;text-transform:lowercase">
+    recent work
+</h2>
 
 <div class="gallery-grid" id="galleryGrid">
-    <!-- FALLBACK IMAGES -->
+    <!-- fallback images (used only if no admin data exists) -->
     <div class="gallery-item"><img src="./images/drauga.png"></div>
     <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
     <div class="gallery-item"><img src="./images/kamerina.png"></div>
@@ -180,35 +167,42 @@ function toggleDropdown(e) {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* SAFE GALLERY LOAD */
-async function loadContent() {
+/* LOAD GALLERY FROM ADMIN DATA */
+function loadGalleryFromAdmin() {
+    const stored = localStorage.getItem("siteData");
+    if (!stored) return;
+
+    let data;
     try {
-        const res = await fetch("data.json");
-        if (!res.ok) return;
-
-        const data = await res.json();
-        if (!data.galleryImages || data.galleryImages.length === 0) return;
-
-        const grid = document.getElementById("galleryGrid");
-        grid.innerHTML = "";
-
-        data.galleryImages
-            .sort((a,b)=>new Date(b.dateAdded)-new Date(a.dateAdded))
-            .forEach(img=>{
-                const div=document.createElement("div");
-                div.className="gallery-item";
-                const i=document.createElement("img");
-                i.src=img.src;
-                i.alt=img.alt||"image";
-                div.appendChild(i);
-                grid.appendChild(div);
-            });
-    } catch(err){
-        console.warn("Gallery fallback used");
+        data = JSON.parse(stored);
+    } catch {
+        return;
     }
+
+    if (!Array.isArray(data.galleryImages) || data.galleryImages.length === 0) return;
+
+    const grid = document.getElementById("galleryGrid");
+    grid.innerHTML = "";
+
+    data.galleryImages
+        .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
+        .forEach(img => {
+            const div = document.createElement("div");
+            div.className = "gallery-item";
+
+            const image = document.createElement("img");
+            image.src = img.src;
+            image.alt = img.alt || "recent work";
+            image.onerror = () => {
+                image.src = "https://placehold.co/400x300?text=Image+Not+Found";
+            };
+
+            div.appendChild(image);
+            grid.appendChild(div);
+        });
 }
 
-document.addEventListener("DOMContentLoaded", loadContent);
+document.addEventListener("DOMContentLoaded", loadGalleryFromAdmin);
 </script>
 
 </body>
