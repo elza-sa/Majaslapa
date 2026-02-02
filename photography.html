@@ -20,7 +20,7 @@ body {
     background-size: 20px 20px;
 }
 
-/* HEADER – SAME STYLE AS GRAPHIC PAGE (NOT STICKY) */
+/* HEADER - MATCHES ABOUT PAGE */
 .header-row {
     display: flex;
     justify-content: space-between;
@@ -39,64 +39,62 @@ body {
     display: block;
 }
 
-/* MENU */
+/* MENU - EXACT MATCH TO ABOUT PAGE */
 .menu {
-         display: flex;
-         justify-content: flex-end;
-         align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .menu a {
-         display: block;
-         color: #1b1818;
-         padding: 15px 16px;
-         text-decoration: none;
-         font-size: 20px;
-         font-weight: bold;
-         transition: all 0.3s ease;
-         text-align: center;
-         text-transform: lowercase;
+    display: block;
+    color: #1b1818;
+    padding: 15px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-transform: lowercase;
 }
 
-
-.menu a:hover,
-.menu a.active {
+.menu a:hover, .menu a.active {
     color: #FC0D0D;
 }
 
-/* DROPDOWN */
+/* DROPDOWN - EXACT MATCH TO ABOUT PAGE */
 .dropdown {
-            position: relative;
-            display: inline-block;
+    position: relative;
+    display: inline-block;
 }
-        
+
 .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: #000;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 10px;
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
 }
-        
+
 .dropdown-content a {
-            float: none;
-            color: #FC0D0D;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            font-size: 16px;
-            font-weight: normal;
-  }
+    float: none;
+    color: #FC0D0D;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    font-weight: normal;
+}
 
 .dropdown-content a:hover {
-  background-color: #444; /* A dark gray on hover for contrast */
- }
+    background-color: #444;
+}
 
-/* GALLERY – LAYOUT UNCHANGED */
+/* GALLERY - REMAINS UNCHANGED */
 .work-gallery {
     display: flex;
     justify-content: center;
@@ -119,7 +117,6 @@ body {
     border-radius: 45px;
 }
 
-/* IMAGE STYLE – FILTER ON, HOVER OFF */
 .gallery-item img {
     width: 100%;
     height: auto;
@@ -127,13 +124,10 @@ body {
     border-radius: 45px;
     border: 8px solid black;
     box-sizing: border-box;
-
-    /* SAME FILTER AS GRAPHIC PAGE */
     filter: sepia(0.7) saturate(2) hue-rotate(15deg);
     transition: filter 0.3s ease-in-out;
 }
 
-/* REMOVE FILTER ON HOVER */
 .gallery-item:hover img {
     filter: none;
 }
@@ -156,104 +150,28 @@ body {
     z-index: 100;
 }
 
-/* RESPONSIVE */
-      @media (max-width: 768px) {
-            .header-row {
-                flex-direction: column;
-                align-items: center;
-                padding: 15px;
-            }
-
-            .logo {
-                margin-bottom: 10px;
-            }
-
-            .menu {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                margin-top: 10px;
-                gap: 15px;
-            }
-
-            .menu a {
-                padding: 8px 12px;
-                font-size: 18px;
-            }
-
-            /* Adjust grid layout for mobile */
-            main.content-grid {
-                display: flex;
-                flex-direction: column;
-                padding: 20px;
-                gap: 30px;
-            }
-
-            .main-image, .about-text, .portfolio-section {
-                padding: 0;
-                align-self: center;
-                justify-self: center;
-                text-align: center;
-            }
-
-            .main-image img, .portfolio-section img {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .about-text p {
-                max-width: 100%;
-                text-align: center;
-                font-size: 18px;
-                line-height: 1.5;
-            }
-
-            .portfolio-section p {
-                font-size: 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-row {
-                padding: 10px;
-            }
-
-            .logo {
-                margin-bottom: 5px;
-            }
-
-            .menu {
-                gap: 10px;
-            }
-
-            .menu a {
-                padding: 6px 10px;
-                font-size: 16px;
-            }
-
-            main.content-grid {
-                padding: 15px;
-                gap: 20px;
-            }
-
-            .about-text p {
-                font-size: 16px;
-            }
-
-            .portfolio-section p {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-row {
-                padding: 10px;
-            }
-
-            .menu {
-                gap: 10px;
-            }
-        }
+/* RESPONSIVE MENU SIZING */
+@media (max-width: 768px) {
+    .header-row {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+    .logo {
+        margin-bottom: 10px;
+    }
+    .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+        gap: 15px;
+    }
+    .menu a {
+        padding: 8px 12px;
+        font-size: 18px;
+    }
+}
 
 html {
     scroll-behavior: smooth;
@@ -265,8 +183,7 @@ html {
 
 <header class="header-row" id="top">
     <div class="logo">
-        <img src="./images/livadrauga.png" alt="Līva Drauga logo"
-             onerror="this.src='https://placehold.co/200x100?text=Liva+Drauga'">
+        <img src="./images/livadrauga.png" alt="Līva Drauga logo">
     </div>
 
     <nav class="menu">
@@ -275,7 +192,7 @@ html {
 
         <div class="dropdown">
             <a href="#" onclick="toggleDropdown(event)" class="active">work</a>
-            <div class="dropdown-content" id="workDropdown">
+            <div class="dropdown-content">
                 <a href="photography.html">photography</a>
                 <a href="graphic.html">graphic</a>
                 <a href="illustrations.html">illustrations</a>
@@ -287,51 +204,50 @@ html {
 </header>
 
 <main>
-<div class="work-gallery">
-    <div class="gallery-column">
-        <div class="gallery-item">
-            <img src="./images/peleka_tina.png" alt="Photography">
+    <div class="work-gallery">
+        <div class="gallery-column">
+            <div class="gallery-item"><img src="./images/peleka_tina.png" alt="Photography"></div>
+            <div class="gallery-item"><img src="./images/kamerina.png" alt="Photography"></div>
+            <div class="gallery-item"><img src="./images/ratini.png" alt="Photography"></div>
         </div>
-        <div class="gallery-item">
-            <img src="./images/kamerina.png" alt="Photography">
-        </div>
-        <div class="gallery-item">
-            <img src="./images/ratini.png" alt="Photography">
-        </div>
-    </div>
-
-    <div class="gallery-column">
-        <div class="gallery-item">
-            <img src="./images/tina.png" alt="Photography">
-        </div>
-        <div class="gallery-item">
-            <img src="./images/vienradzite.png" alt="Photography">
-        </div>
-        <div class="gallery-item">
-            <img src="./images/mamma.png" alt="Photography">
+        <div class="gallery-column">
+            <div class="gallery-item"><img src="./images/tina.png" alt="Photography"></div>
+            <div class="gallery-item"><img src="./images/vienradzite.png" alt="Photography"></div>
+            <div class="gallery-item"><img src="./images/mamma.png" alt="Photography"></div>
         </div>
     </div>
-</div>
 </main>
 
 <a href="#top" class="back-to-top">↑</a>
 
 <script>
-function toggleDropdown(event) {
-    event.preventDefault();
-    const dropdown = document.getElementById('workDropdown');
-    dropdown.style.display =
-        dropdown.style.display === 'block' ? 'none' : 'block';
-}
-
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.dropdown')) {
-        document.getElementById('workDropdown').style.display = 'none';
+    /* Exact JS logic from your About page */
+    function toggleDropdown(event) {
+        event.preventDefault();
+        const dropdown = event.target.parentElement;
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            if (content !== dropdownContent) {
+                content.style.display = 'none';
+            }
+        });
+        
+        if (dropdownContent.style.display === 'block') {
+            dropdownContent.style.display = 'none';
+        } else {
+            dropdownContent.style.display = 'block';
+        }
     }
-});
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                content.style.display = 'none';
+            });
+        }
+    });
 </script>
 
 </body>
 </html>
-
-
