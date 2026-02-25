@@ -33,6 +33,8 @@ body {
         linear-gradient(to right, #e0e0e0 1px, transparent 1px),
         linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
     background-size: 20px 20px;
+    position: relative; 
+    z-index: 999;  /* VERY HIGH so dropdown appears above gallery */
 }
 
 /* LOGO */
@@ -71,11 +73,12 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    top: 100%;      /* make it appear under "work" link */
+    left: 0;        /* align with left of dropdown trigger */
     background-color: #000;
     min-width: 160px;
     border-radius: 10px;
-    z-index: 100;
+    z-index: 1000;  /* higher than header and gallery */
 }
 
 .dropdown-content a {
@@ -244,4 +247,5 @@ document.addEventListener('click', e => {
 
 </body>
 </html>
+
 
