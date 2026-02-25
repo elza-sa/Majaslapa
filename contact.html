@@ -38,29 +38,26 @@ body {
   flex-wrap: nowrap;  /* keep one line */
 }
 
-.menu > a {
+.menu > a,
+.dropdown > a {
   color: #1b1818;
-  padding: 15px 10px;   /* adjust spacing */
-  text-decoration: none;
+  padding: 15px 10px;
+  text-decoration: none;  /* remove underline */
   font-size: 20px;
-  font-weight: bold;     /* all main menu links bold */
+  font-weight: bold;       /* make work bold too */
   text-transform: lowercase;
   white-space: nowrap;
 }
 
 .menu > a:hover,
-.menu > a.active {
+.menu > a.active,
+.dropdown > a:hover {
   color: #FC0D0D;
 }
 
-/* DROPDOWN */
+/* DROPDOWN CONTENT */
 .dropdown {
   position: relative;
-}
-
-.dropdown > a {
-  color: #1b1818;
-  font-weight: normal;     /* dropdown trigger not bold */
 }
 
 .dropdown-content {
@@ -136,7 +133,6 @@ body {
 
 /* MOBILE FIX */
 @media (max-width: 767px) {
-
   .header-row {
     flex-direction: column;
     align-items: center;
@@ -145,7 +141,7 @@ body {
   .menu {
     justify-content: center;
     gap: 8px;
-    flex-wrap: nowrap;   /* one line */
+    flex-wrap: nowrap;
   }
 
   html, body {
