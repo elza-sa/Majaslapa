@@ -53,9 +53,9 @@ body {
     padding: 15px 16px;
     text-decoration: none;
     font-size: 20px;
-    font-weight: normal; /* ✅ NOT BOLD */
+    font-weight: bold;           /* MAIN MENU BOLD */
     text-transform: lowercase;
-    white-space: nowrap; /* ✅ FORCE ONE ROW */
+    white-space: nowrap;         /* ONE ROW */
 }
 
 .menu a:hover,
@@ -82,6 +82,7 @@ body {
     color: #FC0D0D;
     padding: 12px 16px;
     font-size: 16px;
+    font-weight: normal;        /* DROPDOWN NOT BOLD */
     display: block;
 }
 
@@ -92,6 +93,7 @@ body {
 /* GALLERY */
 .work-gallery {
     display: flex;
+    justify-content: center;
     gap: 20px;
     padding: 40px;
 }
@@ -100,7 +102,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    flex: 1;
+    flex: 1 0 0;
 }
 
 .gallery-item {
@@ -109,10 +111,14 @@ body {
 
 .gallery-item img {
     width: 100%;
+    height: auto;
+    display: block;
     border-radius: 96px;
+    margin-bottom: 26px;
+    object-fit: cover;
     border: 16px solid black;
     filter: sepia(0.7) saturate(1.5) hue-rotate(15deg);
-    transition: filter 0.3s ease;
+    transition: filter 0.3s ease-in-out;
 }
 
 .gallery-item img:hover {
@@ -137,18 +143,18 @@ body {
     z-index: 100;
 }
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 @media (max-width: 768px) {
     .header-row {
         flex-direction: column;
-        align-items: center; /* ✅ LOGO CENTERED */
+        align-items: center; /* LOGO CENTER */
     }
 
     .menu {
-        flex-wrap: nowrap;              /* ✅ ONE ROW */
-        overflow-x: auto;               /* ✅ SAFE SCROLL */
-        max-width: 100%;
+        flex-wrap: nowrap;        /* ONE ROW */
+        overflow-x: auto;
         justify-content: center;
+        max-width: 100%;
     }
 
     .menu::-webkit-scrollbar {
@@ -193,15 +199,21 @@ body {
 </header>
 
 <section class="work-gallery">
+
     <div class="gallery-column">
         <div class="gallery-item"><img src="./images/peleka tina.png"></div>
         <div class="gallery-item"><img src="./images/kamerina.png"></div>
+        <div class="gallery-item"><img src="./images/ratini.png"></div>
+        <div class="gallery-item"><img src="./images/sarkani lauki.png"></div>
     </div>
 
     <div class="gallery-column">
         <div class="gallery-item"><img src="./images/tina.png"></div>
         <div class="gallery-item"><img src="./images/vienradzite.png"></div>
+        <div class="gallery-item"><img src="./images/mamma.png"></div>
+        <div class="gallery-item"><img src="./images/blue.png"></div>
     </div>
+
 </section>
 
 <a href="#top" class="back-to-top">↑</a>
@@ -212,15 +224,20 @@ body {
 function toggleDropdown(event) {
     event.preventDefault();
     const content = event.target.nextElementSibling;
+
     document.querySelectorAll('.dropdown-content').forEach(d => {
         if (d !== content) d.style.display = 'none';
     });
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+
+    content.style.display =
+        content.style.display === 'block' ? 'none' : 'block';
 }
 
 document.addEventListener('click', e => {
     if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.dropdown-content').forEach(d => {
+            d.style.display = 'none';
+        });
     }
 });
 </script>
