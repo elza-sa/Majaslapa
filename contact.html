@@ -132,18 +132,18 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-
-      /* 🔥 FIX VIDEO FOR MOBILE */
-      .video-background {
-        position: absolute;
-        height: 100vh;
+      html, body {
+        height: 100%;
       }
 
-      .video-overlay {
-        position: absolute;
-        height: 100vh;
-      }
-
+    .video-background,
+    .video-overlay {
+        position: fixed;
+        inset: 0;
+        height: 100svh;     /* modern mobile */
+        height: 100dvh;     /* dynamic viewport */
+        height: 100vh;      /* fallback */
+    }
       .video-background video {
         width: 100%;
         height: 100%;
@@ -219,3 +219,4 @@ document.addEventListener('click', e => {
 
 </body>
 </html>
+
