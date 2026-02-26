@@ -32,9 +32,10 @@ body {
     background-image:
         linear-gradient(to right, #e0e0e0 1px, transparent 1px),
         linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
     position: relative;
     z-index: 999;
-    overflow: visible; /* 🔴 SVARĪGI */
+    overflow: visible; /* SVARĪGI dropdownam */
 }
 
 /* LOGO */
@@ -68,6 +69,7 @@ body {
 /* DROPDOWN */
 .dropdown {
     position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
@@ -78,7 +80,7 @@ body {
     background-color: #000;
     min-width: 160px;
     border-radius: 10px;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .dropdown-content a {
@@ -87,6 +89,7 @@ body {
     text-decoration: none;
     display: block;
     font-size: 16px;
+    font-weight: normal;
 }
 
 .dropdown-content a:hover {
@@ -99,15 +102,13 @@ body {
     justify-content: center;
     gap: 20px;
     padding: 40px;
-    position: relative;
-    z-index: 1;
 }
 
 .gallery-column {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    flex: 1;
+    flex: 1 0 0;
 }
 
 .gallery-item {
@@ -148,7 +149,7 @@ body {
     z-index: 100;
 }
 
-/* MOBILE FIX */
+/* MOBILE */
 @media (max-width: 768px) {
 
     .header-row {
@@ -157,9 +158,14 @@ body {
     }
 
     .menu {
+        flex-wrap: nowrap;
         overflow-x: auto;
         justify-content: center;
         max-width: 100%;
+    }
+
+    .menu::-webkit-scrollbar {
+        display: none;
     }
 
     .menu a {
@@ -208,6 +214,7 @@ body {
 </header>
 
 <section class="work-gallery">
+
     <div class="gallery-column">
         <div class="gallery-item"><img src="./images/peleka_tina.png"></div>
         <div class="gallery-item"><img src="./images/kamerina.png"></div>
@@ -221,6 +228,7 @@ body {
         <div class="gallery-item"><img src="./images/mamma.png"></div>
         <div class="gallery-item"><img src="./images/blue.png"></div>
     </div>
+
 </section>
 
 <a href="#top" class="back-to-top">↑</a>
