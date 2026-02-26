@@ -74,12 +74,12 @@ body {
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%;      /* make it appear under "work" link */
-    left: 0;        /* align with left of dropdown trigger */
+    top: 100%;
+    left: 0;
     background-color: #000;
     min-width: 160px;
     border-radius: 10px;
-    z-index: 1000;  /* higher than header and gallery */
+    z-index: 9999; /* ⬅⬅⬅ GALVENAIS LABOJUMS */
 }
 
 .dropdown-content a {
@@ -103,6 +103,8 @@ body {
     justify-content: center;
     gap: 20px;
     padding: 40px;
+    position: relative;
+    z-index: 1; /* ⬅⬅⬅ zem dropdown */
 }
 
 .gallery-column {
@@ -152,6 +154,10 @@ body {
 
 /* MOBILE */
 @media (max-width: 768px) {
+    .dropdown {
+    position: relative;
+     z-index: 10000;
+    }
     .header-row {
         flex-direction: column;
         align-items: center; /* LOGO CENTER */
@@ -251,6 +257,7 @@ document.addEventListener('click', e => {
 
 </body>
 </html>
+
 
 
 
